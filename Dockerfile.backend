@@ -1,0 +1,20 @@
+FROM python:3.10-slim
+
+# 沙箱子进程依赖：procps 提供 ps 便于排查，gcc/libc-dev 供部分 numpy/pandas 二进制兜底
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc libc6-dev procps \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY backend/ .
+
+# 数据目录（SQLite + 上传文件），由 docker-compose 挂载卷覆盖
+RUN mkdir -p /app/data/uploads
+
+EXPOSE 8000
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

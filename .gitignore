@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 环境变量与密钥（脱敏，勿提交）
+.env
+
+# 数据与运行时产物
+data/uploads/
+data/reports/
+data/*.db
+data/*.db-journal
+*.log
+
+# Node / 前端
+node_modules/
+frontend/dist/
+
+# 系统
+.DS_Store
+Thumbs.db
